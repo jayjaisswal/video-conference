@@ -5,6 +5,7 @@ import { Route, Routes } from 'react-router-dom'
 import Authentication from './pages/Authentication'
 import toast, { Toaster } from 'react-hot-toast';
 import VideoMeeting from './pages/VideoMeeting';
+
 function App() {
   
   return (
