@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import Auth from "../assets/photos/Auth2.jpg"; // 🔁 Replace with your image path
 import { useContext } from 'react'
-import { AuthContext } from "../contexts/authContext";
+import { AuthContext } from "../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 const SignupLogin = () => {
   const [isLogin, setIsLogin] = useState(true);
