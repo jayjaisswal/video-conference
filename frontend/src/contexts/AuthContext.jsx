@@ -1,7 +1,7 @@
 import axios from "axios";
 import { createContext, useState } from "react";
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
+
 
 
 
@@ -18,7 +18,7 @@ const client = axios.create({
 export const AuthProvider = ({ children }) => {
   const [userData, setUserData] = useState(null);
   // const router = useNavigate();
-  const [loading , setLoading] = useState(false);
+  // const [loading , setLoading] = useState(false);
   
 
   // ✅ Registration function
@@ -26,8 +26,8 @@ export const AuthProvider = ({ children }) => {
     try {
 
       
-      toast.loading("Registering...");
-      setLoading(true);
+      // toast.loading("Registering...");
+      // setLoading(true);
       const response = await client.post("/singup", {
         name,
         username,
@@ -35,8 +35,8 @@ export const AuthProvider = ({ children }) => {
       });
 
       if (response.data.success) {
-        toast.success("Registered Successfully!");
-        setLoading(false);
+        // toast.success("Registered Successfully!");
+        // setLoading(false);
         return response;
       } else {
         toast.error(response.data.message || "Registration failed");
@@ -46,15 +46,15 @@ export const AuthProvider = ({ children }) => {
       toast.error(error?.response?.data?.message || "Registration failed");
       console.error(error);
     }
-    setLoading(false);
+    // setLoading(false);
   };
 
   // ✅ Login function
   const handleLogin = async (username, password) => {
     try {
       
-      toast.loading("Logging in...");
-      setLoading(true);
+      // toast.loading("Logging in...");
+      // setLoading(true);
       const response = await client.post("/login", {
         username,
         password,
@@ -67,7 +67,7 @@ export const AuthProvider = ({ children }) => {
 
         setUserData(response.data); // optional
         
-        toast.success("Login Successful");
+        // toast.success("Login Successful");
         
         
         return response;
@@ -80,9 +80,7 @@ export const AuthProvider = ({ children }) => {
       console.error(error);
       
     }
-   finally {
-    setLoading(false); // ✅ always runs
-  }
+   
   };
 
   const addToUserHistory = async (meetingCode) => {

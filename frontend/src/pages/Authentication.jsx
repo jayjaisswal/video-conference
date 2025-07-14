@@ -3,11 +3,13 @@ import { useForm } from "react-hook-form";
 import Auth from "../assets/photos/Auth2.jpg"; // 🔁 Replace with your image path
 import { useContext } from "react";
 import { AuthContext } from "../contexts/AuthContext";
+import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 const SignupLogin = () => {
   const [isLogin, setIsLogin] = useState(true);
   const { handleRegister, handleLogin } = useContext(AuthContext);
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   const {
     register,
@@ -35,25 +37,36 @@ const SignupLogin = () => {
   //   };
 
   const onSubmit = async (data) => {
+    let toastId;
     try {
       console.log(data);
       const { name, username, password } = data;
 
       if (!isLogin) {
+        toastId = toast.loading("Registering...");
+        setLoading(true);
         const response = await handleRegister(name, username, password);
         console.log("Signup response", response);
+        toast.success("Registration Successful", { id: toastId });
+      setLoading(false);
         reset();
       } else {
+        toastId = toast.loading("Logging in...");
+        setLoading(true);
         const response = await handleLogin(username, password);
         console.log("Login response", response);
         if (response.data.success) {
-          reset();
+         
+          toast.success("Login Successful", { id: toastId });
+          setLoading(false);
+           reset();
           navigate('/home')
         }
       }
     } catch (error) {
       console.error("Authentication Error:", error);
     }
+    setLoading(false);
   };
 
   return (
