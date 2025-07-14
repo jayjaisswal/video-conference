@@ -19,7 +19,7 @@ A full-stack **MERN** (MongoDB, Express, React, Node.js) based **real-time video
 
 ---
 
-## 🛜 TURN Quota Notice (Important for Recruiters)
+## 🛜 TURN Quota Notice
 
 > ⚠️ The app uses a free **Xirsys TURN server** (for enabling video between users on different networks).
 
