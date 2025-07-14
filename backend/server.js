@@ -12,7 +12,13 @@ const cors = require("cors");
 require("dotenv").config();
 port = process.env.PORT || 4000;
 
-app.use(cors());
+app.use(cors({
+  origin: [
+    "http://localhost:5173",
+    "https://video-conference-beige.vercel.app"
+  ],
+  credentials: true,
+}));
 app.use(express.json({limit: "40kb"}));
 app.use(express.urlencoded({limit: "40kb", extended: true}))
 const userRoutes = require("./routes/userRoutes.js");
