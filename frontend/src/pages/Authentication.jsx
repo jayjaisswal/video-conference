@@ -1,14 +1,13 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import Auth from "../assets/photos/Auth2.jpg"; // 🔁 Replace with your image path
-import { useContext } from 'react'
+import { useContext } from "react";
 import { AuthContext } from "../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 const SignupLogin = () => {
   const [isLogin, setIsLogin] = useState(true);
   const { handleRegister, handleLogin } = useContext(AuthContext);
-const navigate = useNavigate();
-
+  const navigate = useNavigate();
 
   const {
     register,
@@ -16,7 +15,7 @@ const navigate = useNavigate();
     formState: { errors },
     reset,
     getValues,
-    setValue
+    setValue,
   } = useForm();
 
   const toggleMode = () => {
@@ -24,55 +23,44 @@ const navigate = useNavigate();
     reset(); // Clear inputs when toggling
   };
 
-//   const onSubmit = (data) => {
-//     const cleanedData = isLogin
-//       ? {
-//           username: data.username,
-//           password: data.password,
-//         }
-//       : data;
+  //   const onSubmit = (data) => {
+  //     const cleanedData = isLogin
+  //       ? {
+  //           username: data.username,
+  //           password: data.password,
+  //         }
+  //       : data;
 
-//     console.log(isLogin ? "Logging in..." : "Signing up...", cleanedData);
-//   };
+  //     console.log(isLogin ? "Logging in..." : "Signing up...", cleanedData);
+  //   };
 
   const onSubmit = async (data) => {
-  try {
-    console.log(data);
-    const { name, username, password } = data;
+    try {
+      console.log(data);
+      const { name, username, password } = data;
 
-    if (!isLogin) {
-      const response = await handleRegister(name, username, password);
-      console.log("Signup response", response);
-      reset(); 
-      
-      
-      
-    
-
-    } else {
-      const response = await handleLogin(username, password);
-      console.log("Login response", response);
-      if(response.data.success)
-      {reset();
-        navigate('/')
-      } 
-     
+      if (!isLogin) {
+        const response = await handleRegister(name, username, password);
+        console.log("Signup response", response);
+        reset();
+      } else {
+        const response = await handleLogin(username, password);
+        console.log("Login response", response);
+        if (response.data.success) {
+          reset();
+          navigate('/home')
+        }
+      }
+    } catch (error) {
+      console.error("Authentication Error:", error);
     }
-  } catch (error) {
-    console.error("Authentication Error:", error);
-  }
-};
-
+  };
 
   return (
     <div className="min-h-screen flex flex-col lg:flex-row items-center justify-center bg-gray-100">
       {/* Left Side - Image */}
       <div className="hidden lg:block lg:w-1/2 h-full">
-        <img
-          src={Auth}
-          alt="Auth"
-          className="w-full h-screen object-cover"
-        />
+        <img src={Auth} alt="Auth" className="w-full h-screen object-cover" />
       </div>
 
       {/* Right Side - Form */}
@@ -109,7 +97,9 @@ const navigate = useNavigate();
                 placeholder="Your Username"
               />
               {errors.username && (
-                <p className="text-red-500 text-sm">{errors.username.message}</p>
+                <p className="text-red-500 text-sm">
+                  {errors.username.message}
+                </p>
               )}
             </div>
 
@@ -130,7 +120,9 @@ const navigate = useNavigate();
                 placeholder="••••••"
               />
               {errors.password && (
-                <p className="text-red-500 text-sm">{errors.password.message}</p>
+                <p className="text-red-500 text-sm">
+                  {errors.password.message}
+                </p>
               )}
             </div>
 

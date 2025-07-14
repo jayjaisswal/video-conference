@@ -2,6 +2,8 @@ const User = require("../models/userModel");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
+const Meeting = require("../models/meetingModel");
+
 
 
 exports.userLogin = async (req, res) => {
@@ -82,3 +84,34 @@ exports.registerUser = async (req, res) => {
         });
   }
 };
+
+exports.getUserHistory = async (req, res) => {
+    const { token } = req.query;
+
+    try {
+        const user = await User.findOne({ token: token });
+        const meetings = await Meeting.find({ user_id: user.username })
+        res.json(meetings)
+    } catch (e) {
+        res.json({ message: `Something went wrong ${e}` })
+    }
+}
+
+exports.addToHistory = async (req, res) => {
+    const { token, meeting_code } = req.body;
+
+    try {
+        const user = await User.findOne({ token: token });
+
+        const newMeeting = new Meeting({
+            user_id: user.username,
+            meetingCode: meeting_code
+        })
+
+        await newMeeting.save();
+
+        res.status(200).json({ message: "Added code to history" })
+    } catch (e) {
+        res.json({ message: `Something went wrong ${e}` })
+    }
+  }

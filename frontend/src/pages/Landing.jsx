@@ -1,8 +1,10 @@
 import React from "react";
-import { Link } from "react-router-dom";
+
 import Logo from "../assets/photos/VideoCall.jpg";
+import { Link, useNavigate } from "react-router-dom";
 
 const Landing = () => {
+  const router = useNavigate();
   return (
     <div className="relative min-h-screen w-full bg-cover bg-center bg-no-repeat bg-[url('../assets/photos/background.jpg')]">
       {/* Overlay for better text readability */}
@@ -11,11 +13,39 @@ const Landing = () => {
       <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-8 py-6">
         {/* Navbar */}
         <nav className="flex justify-between items-center py-4">
-          <div className="text-2xl font-bold text-white tracking-wide">TalkSphere</div>
+          <div
+            onClick={() => {
+              router("/");
+            }}
+            className="text-2xl font-bold text-white tracking-wide cursor-pointer"
+          >
+            TalkSphere
+          </div>
           <div className="hidden md:flex gap-6 text-white text-sm items-center">
-            <div className="cursor-pointer hover:underline">Join as Guest</div>
-            <button className="hover:text-red-400 transition">Register</button>
-            <button className="hover:text-red-400 transition">Login</button>
+            <div
+              onClick={() => {
+                router("/aljk23");
+              }}
+              className="cursor-pointer hover:underline"
+            >
+              Join as Guest
+            </div>
+            <button
+              onClick={() => {
+                router("/auth");
+              }}
+              className="hover:text-red-400 transition cursor-pointer"
+            >
+              Register
+            </button>
+            <button
+              onClick={() => {
+                router("/auth");
+              }}
+              className="hover:text-red-400 transition cursor-pointer"
+            >
+              Login
+            </button>
           </div>
         </nav>
 
@@ -28,10 +58,11 @@ const Landing = () => {
               <span className="text-red-500">Loved Ones</span>
             </h1>
             <p className="mt-4 text-lg sm:text-xl text-gray-300">
-              Real-time video chat, anywhere, anytime. Stay close no matter the distance.
+              Real-time video chat, anywhere, anytime. Stay close no matter the
+              distance.
             </p>
             <Link to="/auth">
-              <button className="mt-6 px-6 py-3 bg-red-600 hover:bg-red-500 text-white rounded-md text-lg font-semibold transition-all duration-200 hover:scale-95 animate-bounce delay-200">
+              <button className=" cursor-pointer mt-6 px-6 py-3 bg-red-600 hover:bg-red-500 text-white rounded-md text-lg font-semibold transition-all duration-200 hover:scale-95 animate-bounce delay-200">
                 Get Started
               </button>
             </Link>
