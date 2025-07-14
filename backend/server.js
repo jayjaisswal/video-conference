@@ -22,6 +22,9 @@ app.use(cors({
 app.use(express.json({limit: "40kb"}));
 app.use(express.urlencoded({limit: "40kb", extended: true}))
 const userRoutes = require("./routes/userRoutes.js");
+const iceRoute = require("./routes/iceRoute");
+
+app.use("/api/ice", iceRoute);
 
 
 

@@ -19,20 +19,51 @@ import { useRef, useEffect, useState } from "react";
 const server_url = import.meta.env.VITE_API_URL;
 var connections = {};
 
-const peerConfigConnections = {
-  iceServers: [
-    {
-      urls: "stun:stun.l.google.com:19302",
-    },
-    {
-      urls: "turn:relay1.expressturn.com:3478",
-      username: "efT6jjM5QZk4nFQIWuW4VJZJg6bKZoI2Qnd7smgMt6Bo=",
-      credential: "YJ9uzwOJ3qPFLfq4",
-    },
-  ],
-};
+// const peerConfigConnections = {
+//   iceServers: [
+//     {
+//       urls: "stun:stun.l.google.com:19302",
+//     },
+//     {
+//       urls: "turn:relay1.expressturn.com:3478",
+//       username: "efT6jjM5QZk4nFQIWuW4VJZJg6bKZoI2Qnd7smgMt6Bo=",
+//       credential: "YJ9uzwOJ3qPFLfq4",
+//     },
+//   ],
+// };
+
+
 
 export default function VideoMeetComponent() {
+
+    const peerConfigConnectionsRef = useRef({ iceServers: [] });
+
+    const fetchIceServers = async () => {
+  try {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/api/ice`); // replace with actual hosted backend URL
+    const data = await res.json();
+
+    // Convert the structure into iceServers array format
+    const iceServers = data.urls.map(url => ({
+      urls: url,
+      username: data.username,
+      credential: data.credential,
+    }));
+
+    peerConfigConnectionsRef.current = { iceServers };
+    console.log("ICE Config set:", peerConfigConnectionsRef.current);
+  } catch (error) {
+    console.error("Failed to fetch ICE servers:", error);
+  }
+};
+useEffect(() => {
+  fetchIceServers().then(() => {
+    getPermissions(); // Now call your existing logic
+  });
+}, []);
+
+  
+
   var socketRef = useRef();
   let socketIdRef = useRef();
 
@@ -338,9 +369,7 @@ export default function VideoMeetComponent() {
 
       socketRef.current.on("user-joined", (id, clients) => {
         clients.forEach((socketListId) => {
-          connections[socketListId] = new RTCPeerConnection(
-            peerConfigConnections
-          );
+          connections[socketListId] = new RTCPeerConnection(peerConfigConnectionsRef.current);
           // Wait for their ice candidate
           connections[socketListId].onicecandidate = function (event) {
             if (event.candidate != null) {
