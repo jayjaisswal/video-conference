@@ -18,11 +18,16 @@ const client = axios.create({
 export const AuthProvider = ({ children }) => {
   const [userData, setUserData] = useState(null);
   // const router = useNavigate();
+  const [loading , setLoading] = useState(false);
   
 
   // ✅ Registration function
   const handleRegister = async (name, username, password) => {
     try {
+
+      
+      toast.loading("Registering...");
+      setLoading(true);
       const response = await client.post("/singup", {
         name,
         username,
@@ -31,30 +36,37 @@ export const AuthProvider = ({ children }) => {
 
       if (response.data.success) {
         toast.success("Registered Successfully!");
+        setLoading(false);
         return response;
       } else {
         toast.error(response.data.message || "Registration failed");
       }
+      
     } catch (error) {
       toast.error(error?.response?.data?.message || "Registration failed");
       console.error(error);
     }
+    setLoading(false);
   };
 
   // ✅ Login function
   const handleLogin = async (username, password) => {
     try {
       
+      toast.loading("Logging in...");
+      setLoading(true);
       const response = await client.post("/login", {
         username,
         password,
       });
 
       if (response.data.success) {
+      
         localStorage.setItem("token", response.data.token);
         // router("/home")
 
         setUserData(response.data); // optional
+        
         toast.success("Login Successful");
         
         
@@ -68,6 +80,9 @@ export const AuthProvider = ({ children }) => {
       console.error(error);
       
     }
+   finally {
+    setLoading(false); // ✅ always runs
+  }
   };
 
   const addToUserHistory = async (meetingCode) => {
