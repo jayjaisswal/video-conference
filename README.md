@@ -19,14 +19,29 @@ A full-stack **MERN** (MongoDB, Express, React, Node.js) based **real-time video
 
 ---
 
+## 🛜 TURN Quota Notice (Important for Recruiters)
+
+> ⚠️ The app uses a free **Xirsys TURN server** (for enabling video between users on different networks).
+
+- 🔁 This **TURN service has a daily data quota**.
+- 🛑 If quota exceeds (common during demos/testing), video may not work across different networks.
+- ✅ In such cases:
+  - Video & audio still work **on same hotspot or LAN**.
+  - The entire project (code, flow, and structure) remains fully inspectable.
+- 🔄 The quota **automatically resets every 24 hours**.
+
+👉 [Click here to watch on YouTube](https://www.youtube.com/watch?v=your-demo-video-id)
+
+---
+
 ### 🔑 Home Page  
 ![Home](./frontend/src/assets/photos/Home.png)
 
 ### 🔑 Auth Page  
-![Athentication](./frontend/src/assets/photos/Authh.png)
+![Authentication](./frontend/src/assets/photos/Authh.png)
 
 
-### 🔑 Logged In Page  
+### 🔑 Logged-In Page  
 ![Logged In Page](./frontend/src/assets/photos/lobby.png)
 
 ### 🔑 Enter Lobby 
