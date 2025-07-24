@@ -71,7 +71,7 @@ function HomeComponent() {
   {/* Right Panel */}
   <div className="rightPanel w-full md:w-1/2 flex justify-center">
     <img
-      src="../src/assets/photos/undraw.png"
+      src="/undraw.png"
       alt="Meeting Illustration"
       className="max-w-full h-auto"
     />
