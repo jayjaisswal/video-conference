@@ -13,9 +13,15 @@ function HomeComponent() {
 
   const { addToUserHistory } = useContext(AuthContext);
   let handleJoinVideoCall = async () => {
-    await addToUserHistory(meetingCode);
-    navigate(`/${meetingCode}`);
-  };
+  if (!meetingCode.trim()) {
+    toast.error("Please enter a valid meeting code");
+    return;
+  }
+
+  await addToUserHistory(meetingCode);
+  navigate(`/${meetingCode}`);
+};
+
 
   return (
     <>
@@ -61,6 +67,7 @@ function HomeComponent() {
         label="Meeting Code"
         variant="outlined"
         fullWidth
+        
       />
       <Button onClick={handleJoinVideoCall} variant="contained" color="primary">
         Join

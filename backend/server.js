@@ -1,17 +1,16 @@
 const express = require("express")
 const app = express();
+const {dbConnection} = require("./config/dbconnection.js");
 const { createServer } = require("http");
-const socketIO = require("socket.io");
-const mongoose = require("mongoose") ;
 const connectToSocket = require("./controllers/socketManager");
 
 const server = createServer(app);  // ✅ HTTP server for socket.io
 const httpServer = connectToSocket(server);
-const {dbConnection} = require("./config/dbconnection.js");
-const cors = require("cors");
-require("dotenv").config();
+
 port = process.env.PORT || 4000;
 
+const cors = require("cors");
+require("dotenv").config();
 app.use(cors({
   origin: [
     "http://localhost:5173",
@@ -19,6 +18,7 @@ app.use(cors({
   ],
   credentials: true,
 }));
+
 app.use(express.json({limit: "40kb"}));
 app.use(express.urlencoded({limit: "40kb", extended: true}))
 const userRoutes = require("./routes/userRoutes.js");

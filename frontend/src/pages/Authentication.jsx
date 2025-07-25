@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import Auth from "../assets/photos/Auth2.jpg"; // 🔁 Replace with your image path
 import { useContext } from "react";
@@ -25,16 +25,14 @@ const SignupLogin = () => {
     reset(); // Clear inputs when toggling
   };
 
-  //   const onSubmit = (data) => {
-  //     const cleanedData = isLogin
-  //       ? {
-  //           username: data.username,
-  //           password: data.password,
-  //         }
-  //       : data;
+  
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      navigate('/home', { replace: true }); // Prevents back to /auth
+    }
+  }, []);
 
-  //     console.log(isLogin ? "Logging in..." : "Signing up...", cleanedData);
-  //   };
 
   const onSubmit = async (data) => {
     let toastId;

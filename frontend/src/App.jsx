@@ -1,29 +1,47 @@
-
 import './App.css'
-import Landing from './pages/Landing'
 import { Route, Routes } from 'react-router-dom'
+import Landing from './pages/Landing'
 import Authentication from './pages/Authentication'
-import toast, { Toaster } from 'react-hot-toast';
-import VideoMeeting from './pages/VideoMeeting';
-import Home from './pages/Home';
-import History from './pages/History';
+import VideoMeeting from './pages/VideoMeeting'
+import Home from './pages/Home'
+import History from './pages/History'
+import PrivateRoute from './utils/PrivateRoute'
+import PublicRoute from './utils/PublicRoute'
 
 function App() {
-  
   return (
-    <div className=''>
-      
-        <Routes>
-          <Route path='/' element={<Landing/>} />
-          <Route path='/auth' element={<Authentication/>} />
-          <Route path='/home's element={<Home />} />
-            <Route path='/history' element={<History />} />
-          <Route path='/:url' element={<VideoMeeting/>} />
-        </Routes>
-      
-      
-    </div>
+    <>
+      <Routes>
+        {/* Public Routes */}
+        <Route path='/' element={<Landing />} />
+        <Route path='/auth'
+         element={
+           <PublicRoute><Authentication /></PublicRoute>
+         
+         
+         } />
+        <Route path='/:url' element={<VideoMeeting />} /> {/* Guest access allowed */}
+
+        {/* Protected Routes */}
+        <Route 
+          path='/home' 
+          element={
+            <PrivateRoute>
+              <Home />
+            </PrivateRoute>
+          } 
+        />
+        <Route 
+          path='/history' 
+          element={
+            <PrivateRoute>
+              <History />
+            </PrivateRoute>
+          } 
+        />
+      </Routes>
+    </>
   )
 }
 
-export default App
+export default App;
